@@ -28,7 +28,7 @@ namespace userauth.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> SignOut()
+        public IActionResult SignOut()
         {
             HttpContext.Session.Remove("AuthUserId");
             HttpContext.User = new System.Security.Claims.ClaimsPrincipal();
