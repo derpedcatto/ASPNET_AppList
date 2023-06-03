@@ -1,0 +1,27 @@
+﻿@model homework1.Models.ProductModel
+@{
+	ViewData["Title"] = "Products";
+}
+
+<div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top h-50" src="@Url.Content(@product.Image)" />
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">@product.Name</h5>
+                            <h4>@product.Price.ToString() $</h4>
+                            <h6>@product.Description</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto w-75" href="#">Buy</a></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
