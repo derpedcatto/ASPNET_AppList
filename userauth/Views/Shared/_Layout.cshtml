@@ -36,6 +36,9 @@
                                                  .FirstOrDefault(c => c.Type == ClaimTypes.UserData)
                                                  ?.Value;
                     <img src="/uploads/@avatar" alt="Avatar" class="rounded-circle" style="max-width: 40px" />
+                    <a asp-controller="User" asp-action="SignOut" title="Вийти">
+                        <i class="bi-person-fill-dash text-dark mx-2" style="font-size:2rem;margin-left:20px;"></i>
+                    </a>
                 }
                 else
                 {

@@ -28,6 +28,14 @@ namespace userauth.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> SignOut()
+        {
+            HttpContext.Session.Remove("AuthUserId");
+            HttpContext.User = new System.Security.Claims.ClaimsPrincipal();
+
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         public JsonResult LogIn([FromForm]string login, [FromForm]string password)
         {
