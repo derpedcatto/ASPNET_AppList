@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "classwork4", "..\classwork4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "userauth", "..\userauth\userauth.csproj", "{0D184404-A745-4D60-B55F-17077D322E40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop", "..\shop\shop.csproj", "{591D3554-D378-436C-AB7B-8F7EA6FDFAA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shop", "..\shop\shop.csproj", "{591D3554-D378-436C-AB7B-8F7EA6FDFAA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "classwork6", "..\classwork6\classwork6.csproj", "{FAB9C367-1B1D-4920-8651-479452EACD85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{591D3554-D378-436C-AB7B-8F7EA6FDFAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{591D3554-D378-436C-AB7B-8F7EA6FDFAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{591D3554-D378-436C-AB7B-8F7EA6FDFAA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB9C367-1B1D-4920-8651-479452EACD85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB9C367-1B1D-4920-8651-479452EACD85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB9C367-1B1D-4920-8651-479452EACD85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB9C367-1B1D-4920-8651-479452EACD85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
