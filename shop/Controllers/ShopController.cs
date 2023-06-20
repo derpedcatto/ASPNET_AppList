@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using shop.Data;
 using shop.Models.Shop;
 using System.Globalization;
@@ -22,6 +23,7 @@ namespace shop.Controllers
 											.Where(g => g.DeleteDt == null)
 											.ToList(),
 				Products = _dataContext.Products
+									   .Include(p => p.Rates) // заповнює навінаційну властивість (включає до SQL запиту)
 									   .Where(p => p.DeleteDt == null)
 									   .ToList()
             };

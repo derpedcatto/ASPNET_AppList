@@ -1,13 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - shop</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/shop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 </head>
 <body>
     <header>
@@ -28,6 +30,32 @@
                         </li>
                     </ul>
                 </div>
+
+                @if (Context.User.Identity?.IsAuthenticated == true)
+                {
+                    string? avatar = Context.User.Claims
+                    .FirstOrDefault(c => c.Type == ClaimTypes.UserData)
+                    ?.Value;
+                    <img src="/uploads/@avatar" alt="Avatar" class="rounded-circle" style="max-width: 40px" />
+                    <a asp-controller="User" asp-action="SignOut" title="Вийти">
+                        <i class="bi-person-fill-dash text-dark mx-2" style="font-size:2rem;margin-left:20px;"></i>
+                    </a>
+                }
+                else
+                {
+                    <!-- Button trigger modal -->
+                    <i class="bi-person-lock text-dark"
+                       style="font-size:2rem;"
+                       role="button"
+                       data-bs-toggle="modal"
+                       data-bs-target="#signinModal"
+                       title="Вхід до системи">
+                    </i>
+
+                    <a asp-controller="User" asp-action="SignUp" title="Реєстрація">
+                        <i class="bi-person-fill-add text-dark mx-2" style="font-size:2rem;"></i>
+                    </a>
+                }
             </div>
         </nav>
     </header>
@@ -35,6 +63,56 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+    </div>
+
+    <!--  Sign In Modal  -->
+    <div class="modal fade" id="signinModal" tabindex="-1" aria-labelledby="signinModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="signinModal">Вхід до системи</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"  
+                              id="signin-login-addon"><i class="bi-person" style="font-size:1.1rem"></i></span>
+                        <input type="text" class="form-control" id="signin-login" name="signin-login"
+                               placeholder="Введіть логін"
+                               aria-describedby="signin-login-addon">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"
+                              id="signin-password-addon"><i class="bi-lock" style="font-size:1.1rem"></i></span>
+                        <input type="password" class="form-control" id="signin-password" name="signin-password"
+                               placeholder="Введіть пароль"
+                               aria-describedby="signin-password-addon">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-primary" id="signin-button">Вхід</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Login Auth failed modal -->
+    <div class="modal fade" id="loginAuthFailedModal" tabindex="-1" role="dialog" aria-labelledby="loginAuthFailedModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginAuthFailedModalLabel">Error!</h5>
+                </div>
+                <div class="modal-body">
+                    Invalid credentials!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

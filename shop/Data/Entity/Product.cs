@@ -10,5 +10,8 @@
 		public DateTime  CreateDt		{ get; set; }
 		public DateTime? DeleteDt		{ get; set; }
 		public string	 ImageUrl		{ get; set; } = null!;
+
+		// Navigation property
+		public List<Rate> Rates { get; set; } = null!;
 	}
 }

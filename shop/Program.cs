@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using shop.Data;
+using shop.Middleware;
+using shop.Services.Hash;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddSession(options =>
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddSingleton<IHashService, Sha1HashService>();
 
 // Add Data Context
 builder.Services.AddDbContext<DataContext>(options =>
@@ -44,6 +48,7 @@ app.UseAuthorization();
 
 // Включення сесій, порядок має значення
 app.UseSession();
+app.UseSessionAuth();
 
 app.MapControllerRoute(
     name: "default",

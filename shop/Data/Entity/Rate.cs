@@ -6,5 +6,8 @@
 		public Guid		UserId	{ get; set; }
 		public int		Rating	{ get; set; }
 		public DateTime Moment	{ get; set; }
+
+        // Navigation property
+        public Product Product { get; set; } = null!;
 	}
 }
