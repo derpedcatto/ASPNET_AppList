@@ -366,3 +366,4 @@ FodyWeavers.xsd
 /userauth/appsettings.json
 /userauth/appsettings.json
 /shop/appsettings.json
+/shop/appsettings.Development.json
