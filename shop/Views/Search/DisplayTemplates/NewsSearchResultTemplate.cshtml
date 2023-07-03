@@ -1,0 +1,21 @@
+﻿@model shop.Models.ORM.AzureSearchNews.Value
+
+<div class="card d-flex flex-row mt-2 overflow-hidden">
+	<div class="col col-3 d-flex justify-content-center align-items-center">
+		<img src="@Model.image.thumbnail.contentUrl" style="max-height:100%; height:auto; width:100%;" />
+	</div>
+	<div class="col col-9 card-body">
+		<div class="card-title mb-1 fs-5"><a href="@Model.url">@Model.name</a> - @Model.provider[0].name</div>
+		<div class="card-subtitle" style="color:forestgreen;font-size:0.8rem;">@Model.url</div>
+		<p class="card-text mt-3 text-secondary">@Model.description...</p>
+	</div>
+</div>
+
+@*
+	@Model.name
+	@Model.description
+	@Model.provider
+	@Model.url
+	@Model.about
+	@Model.provider[0].name
+*@

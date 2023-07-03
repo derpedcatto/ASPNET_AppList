@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "userauth", "..\userauth\use
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shop", "..\shop\shop.csproj", "{591D3554-D378-436C-AB7B-8F7EA6FDFAA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "classwork6", "..\classwork6\classwork6.csproj", "{FAB9C367-1B1D-4920-8651-479452EACD85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "classwork6", "..\classwork6\classwork6.csproj", "{FAB9C367-1B1D-4920-8651-479452EACD85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

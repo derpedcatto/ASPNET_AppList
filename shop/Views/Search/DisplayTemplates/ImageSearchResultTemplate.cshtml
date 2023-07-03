@@ -1,0 +1,11 @@
+﻿@model shop.Models.ORM.AzureSearchImage.Value
+
+<div class="card d-flex flex-column mt-2 overflow-hidden">
+	<div class="row overflow-hidden" style="max-height:75vh;">
+		<img src="@Model.contentUrl" style="max-height:100%; height:auto; width:100%;" />
+	</div>
+	<div class="row card-body">
+		<div class="card-title mb-1 fs-5"><a href="@Model.hostPageUrl">@Model.name</a></div>
+		<div class="card-subtitle" style="color:forestgreen;font-size:0.8rem;">@Model.hostPageUrl</div>
+	</div>
+</div>

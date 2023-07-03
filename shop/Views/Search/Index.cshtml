@@ -1,0 +1,60 @@
+﻿@model shop.Models.Search.SearchWebModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Когнітивні сервіси. Пошук.</h1>
+</div>
+
+<div class="row">
+    <div class="col col-7 offset-2">
+        <form>
+            <label for="search" class="form-label">Що шукаємо?</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text py-0 px-2"
+                      id="search-addon"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control"
+                       id="search" name="search"
+                       placeholder="Введіть пошуковий запит"
+                       aria-describedby="search-addon">
+                <button class="btn btn-secondary" type="submit">Пошук</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Веб-сторінки</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Search" asp-action="Image"
+           asp-route-search="@Model?.SearchWebResponse?.queryContext.originalQuery">Зображення</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Search" asp-action="Video"
+           asp-route-search="@Model?.SearchWebResponse?.queryContext.originalQuery">Відео</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Search" asp-action="News"
+           asp-route-search="@Model?.SearchWebResponse?.queryContext.originalQuery">Новини</a>
+    </li>
+</ul>
+
+@if(Model.SearchWebResponse != null)
+{
+    <div class="container mt-4 mx-auto w-75">
+        <h3 class="mb-3">
+            За запитом
+            <b>@Model.SearchWebResponse.queryContext.originalQuery</b>
+            знайдено
+            <b>@Model.SearchWebResponse.webPages.totalEstimatedMatches</b>
+            веб-сторінок:
+        </h3>
+        @foreach(var result in Model.SearchWebResponse.webPages.value)
+        {
+            @Html.DisplayFor(m => result, "WebSearchTemplate")
+        }
+    </div>
+}

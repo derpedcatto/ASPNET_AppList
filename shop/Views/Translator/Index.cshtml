@@ -1,0 +1,101 @@
+﻿@model shop.Models.Translator.TranslatorViewModel
+@{
+    ViewData["Title"] = "Translator";
+
+    var languageOptions = new Dictionary<string, string>
+    {
+        { "uk", "Українська" },
+        { "en", "English" },
+        { "es", "Spanish" }
+    };
+}
+
+<div class="text-center">
+    <h1 class="display-4">Когнітивні сервіси. Перекладач.</h1>
+</div>
+
+@if (Model.FormModel != null && Model.ErrorMessage != null)
+{
+    <p class="alert alert-danger">
+        @Model.ErrorMessage
+    </p>
+}
+
+<form>
+    <div class="row">
+        <div class="col col-3 text-center">
+            <select class="form-select" name="LangFrom">
+                @foreach (var option in languageOptions)
+                {
+                    <option value="@option.Key">@option.Value</option>
+                }
+            </select>
+            <textarea class="form-control" rows="4" name="OriginalText">
+                @if (@Model.FormModel.TranslateButton == "yes")
+                {
+                    @Model.FormModel.OriginalText
+                }
+                @if (@Model.FormModel.InverseButton == "yes")
+                {
+                    @Model.FormModel.TranslatedText
+                }
+            </textarea>
+        </div>
+        <div class="col col-1 text-center">
+            <button name="TranslateButton" value="TranslateButton"><i class="bi bi-arrow-right-square"></i></button>
+            <br />
+            <br />
+            <button name="InverseButton" value="InverseButton"><i class="bi bi-arrow-left-right"></i></button>
+        </div>
+        <div class="col col-3 text-center">
+            <select class="form-select" name="LangTo">
+                @foreach (var option in languageOptions)
+                {
+                    <option value="@option.Key">@option.Value</option>
+                }
+            </select>
+            <textarea class="form-control" rows="4" name="TranslatedText" disabled>
+                @if (@Model.FormModel.TranslateButton == "yes")
+                {
+                    @Model.FormModel.TranslatedText
+                }
+                @if (@Model.FormModel.InverseButton == "yes")
+                {
+                    @Model.FormModel.OriginalText
+                }
+            </textarea>
+        </div>
+    </div>
+</form>
+
+<script>
+    let selectLangFrom = document.getElementsByName("LangFrom");
+    let selectLangTo = document.getElementsByName("LangTo");
+
+    let translateButton = "@Model.FormModel.TranslateButton";
+    let inverseButton = "@Model.FormModel.InverseButton";
+    console.log(translateButton);
+    console.log(inverseButton);
+
+    if (translateButton == "yes") {
+        for (let i = 0; i < @languageOptions.Count; i++) {
+            if (selectLangFrom[0][i].value == "@Model.FormModel.LangFrom") {
+                selectLangFrom[0][i].setAttribute('selected', true);
+            }
+            if (selectLangTo[0][i].value == "@Model.FormModel.LangTo") {
+                selectLangTo[0][i].setAttribute('selected', true);
+            }
+        }
+    }
+
+    if (inverseButton == "yes") {
+        for (let i = 0; i < @languageOptions.Count; i++) {
+            if (selectLangFrom[0][i].value == "@Model.FormModel.LangTo") {
+                selectLangFrom[0][i].setAttribute('selected', true);
+            }
+            if (selectLangTo[0][i].value == "@Model.FormModel.LangFrom") {
+                selectLangTo[0][i].setAttribute('selected', true);
+            }
+        }
+    }
+</script>
