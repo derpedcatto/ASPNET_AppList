@@ -21,7 +21,7 @@
     </p>
 }
 
-<form>
+<form name="formTranslation">
     <div class="row">
         <div class="col col-3 text-center">
             <select class="form-select" name="LangFrom">
@@ -30,15 +30,8 @@
                     <option value="@option.Key">@option.Value</option>
                 }
             </select>
-            <textarea class="form-control" rows="4" name="OriginalText">
-                @if (@Model.FormModel.TranslateButton == "yes")
-                {
-                    @Model.FormModel.OriginalText
-                }
-                @if (@Model.FormModel.InverseButton == "yes")
-                {
-                    @Model.FormModel.TranslatedText
-                }
+            <textarea class="form-control" rows="4" name="OriginalText" style="white-space:nowrap">
+                @Model.FormModel.OriginalText
             </textarea>
         </div>
         <div class="col col-1 text-center">
@@ -54,15 +47,8 @@
                     <option value="@option.Key">@option.Value</option>
                 }
             </select>
-            <textarea class="form-control" rows="4" name="TranslatedText" disabled>
-                @if (@Model.FormModel.TranslateButton == "yes")
-                {
-                    @Model.FormModel.TranslatedText
-                }
-                @if (@Model.FormModel.InverseButton == "yes")
-                {
-                    @Model.FormModel.OriginalText
-                }
+            <textarea class="form-control" rows="4" name="TranslatedText" style="white-space:nowrap">
+                @Model.FormModel.TranslatedText
             </textarea>
         </div>
     </div>
@@ -74,8 +60,12 @@
 
     let translateButton = "@Model.FormModel.TranslateButton";
     let inverseButton = "@Model.FormModel.InverseButton";
-    console.log(translateButton);
-    console.log(inverseButton);
+
+    let elementInverseButton = document.getElementsByName('InverseButton');
+    let originalTargetLang;
+    let targetLang;
+
+    let form = document.getElementsByName("formTranslation");
 
     if (translateButton == "yes") {
         for (let i = 0; i < @languageOptions.Count; i++) {
@@ -84,18 +74,30 @@
             }
             if (selectLangTo[0][i].value == "@Model.FormModel.LangTo") {
                 selectLangTo[0][i].setAttribute('selected', true);
+                originalTargetLang = selectLangTo[0][i].value;
             }
         }
     }
 
     if (inverseButton == "yes") {
         for (let i = 0; i < @languageOptions.Count; i++) {
-            if (selectLangFrom[0][i].value == "@Model.FormModel.LangTo") {
+            if (selectLangFrom[0][i].value == "@Model.FormModel.LangFrom") {
                 selectLangFrom[0][i].setAttribute('selected', true);
             }
-            if (selectLangTo[0][i].value == "@Model.FormModel.LangFrom") {
+            if (selectLangTo[0][i].value == "@Model.FormModel.LangTo") {
                 selectLangTo[0][i].setAttribute('selected', true);
+                originalTargetLang = selectLangTo[0][i].value;
             }
         }
     }
+    document.addEventListener('DOMContentLoaded', function () {
+        elementInverseButton[0].addEventListener('click', function () {
+            targetLang = document.getElementsByName("LangTo")[0].value;
+            console.log("targetLang - " + targetLang + " originalTargetLang - " + originalTargetLang);
+            if (targetLang != originalTargetLang) {
+                if (form[0]) { event.preventDefault(); }
+                alert("Can't inverse with changed language!");
+            }
+        });
+    });
 </script>

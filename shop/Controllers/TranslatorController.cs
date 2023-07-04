@@ -20,6 +20,7 @@ namespace shop.Controllers
         {
             TranslatorViewModel viewModel = new();
             viewModel.FormModel = formModel;
+            bool invertedTranslation = false;
 
             if (formModel != null && (formModel.TranslateButton != null || formModel.InverseButton != null))
             {
@@ -57,10 +58,12 @@ namespace shop.Controllers
                     else
                     {
                         route += $"from={formModel.LangTo}&to={formModel.LangFrom}";
-                        textToTranslate = formModel.TranslatedText;
+                        textToTranslate = formModel.OriginalText;
 
                         viewModel.FormModel.TranslateButton = "no";
                         viewModel.FormModel.InverseButton = "yes";
+
+                        invertedTranslation = true;
                     }
                 }
 
@@ -82,7 +85,22 @@ namespace shop.Controllers
                         
                         var translation = JsonSerializer.Deserialize<List<TranslationResult>>(result);
 
-                        viewModel.FormModel.TranslatedText = translation[0].translations[0].text;
+                        textToTranslate = translation[0].translations[0].text;
+
+                        if (invertedTranslation == true) 
+                        {
+                            string temp = viewModel.FormModel.TranslatedText;
+                            viewModel.FormModel.TranslatedText = textToTranslate;
+                            viewModel.FormModel.OriginalText = temp;
+
+                            temp = viewModel.FormModel.LangFrom;
+                            viewModel.FormModel.LangFrom = viewModel.FormModel.LangTo;
+                            viewModel.FormModel.LangTo = temp;
+                        }
+                        else 
+                        {
+                            viewModel.FormModel.TranslatedText = textToTranslate; 
+                        }
                     }
                 }
             }
