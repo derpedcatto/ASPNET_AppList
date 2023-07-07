@@ -99,7 +99,7 @@ namespace shop.Controllers
                         }
                         else 
                         {
-                            viewModel.FormModel.TranslatedText = textToTranslate; 
+                            viewModel.FormModel.TranslatedText = textToTranslate;
                         }
                     }
                 }
