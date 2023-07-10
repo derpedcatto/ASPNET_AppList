@@ -1,0 +1,114 @@
+﻿@using shop.Models.Cosmos;
+@{
+    ViewData["Title"] = "Azure SQL";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Бази даних Azure. CosmosDB.</h1>
+</div>
+
+<form method="post" id="form-review">
+    <h3>Залишити відгук</h3>
+    <div class="mb-3">
+        <label for="nickname" class="form-label">Ваше ім'я</label>
+        <input type="text" class="form-control" id="nickname" name="Name" placeholder="Nickname">
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">Ваше повідомлення</label>
+        <textarea class="form-control" id="message" name="Message" rows="3"></textarea>
+    </div>
+    <div class="mb-3" id="star-container">
+        <i class="bi bi-star"></i>
+        <i class="bi bi-star"></i>
+        <i class="bi bi-star"></i>
+        <i class="bi bi-star"></i>
+        <i class="bi bi-star"></i>
+    </div>
+    <input type="hidden" name="Rating" value="4" />
+    <button type="submit" class="btn btn-secondary">Надіслати</button>
+</form>
+
+<div class="row row-cols-4 g-3 mt-3">
+    @if (ViewData["feedbacks"] is List<FeedbackFormModel> list)
+    {
+        foreach (FeedbackFormModel feedback in list)
+        {
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@feedback.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">
+                            @for(int i = 0; i < int.Parse(feedback.Rating); i++)
+                            {
+                                <i class="bi bi-star-fill"></i>
+                            }
+                        </h6>
+                        <p class="card-text">@feedback.Message</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+<script>
+    const userRatingArray = Array.from(document.getElementById('star-container').getElementsByClassName('bi'));
+
+    for (let i = 0; i < userRatingArray.length; i++) {
+        userRatingArray[i].addEventListener('mouseenter', function (e) {
+            starHoverEnter(e.target);
+        });
+        userRatingArray[i].addEventListener('mouseleave', function (e) {
+            starHoverLeave(e.target);
+        });
+        userRatingArray[i].addEventListener('click', function (e) {
+            clickStar(e.target);
+        });    
+    };
+
+    function getStarIndex(starTarget) {
+        let index = 0;
+        for (let i = 0; i <= userRatingArray.length; i++) {
+            if (starTarget == userRatingArray[i]) {
+                return index;
+            }
+            index++;
+        }
+    }
+
+    function starHoverEnter(starTarget) {
+        let index = getStarIndex(starTarget);
+        for (let i = 0; i <= index; i++) {
+            if (!userRatingArray[i].classList.contains('star-blocked')) {
+                userRatingArray[i].classList.add('bi-star-fill');
+                userRatingArray[i].classList.remove('bi-star');
+            }
+        }
+    }
+
+    function starHoverLeave(starTarget) {
+        let index = getStarIndex(starTarget);
+        for (let i = 0; i <= index; i++) {
+            if (!userRatingArray[i].classList.contains('star-blocked')) {
+                userRatingArray[i].classList.remove('bi-star-fill');
+                userRatingArray[i].classList.add('bi-star');
+            }
+        }
+    }
+
+
+    function clickStar(starTarget) {
+        let index = getStarIndex(starTarget);
+        for (let i = 0; i <= index; i++) {
+            userRatingArray[i].classList.add('star-blocked');
+            starHoverEnter(userRatingArray[i]);
+        }
+        for (let i = index + 1; i < userRatingArray.length; i++) {
+            userRatingArray[i].classList.remove('star-blocked');
+            starHoverLeave(userRatingArray[i]);
+        }
+
+        document.getElementById("form-review").elements["Rating"].value = index + 1;
+    }
+</script>

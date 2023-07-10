@@ -3,12 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using shop.Data;
 using shop.Middleware;
+using shop.Services.Cosmos;
 using shop.Services.Hash;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<IHashService, Sha1HashService>();
+builder.Services.AddSingleton<ICosmosDbService, TodoCosmosDbService>();
 
 // Налагодження сесій:
 builder.Services.AddDistributedMemoryCache();
@@ -19,7 +23,6 @@ builder.Services.AddSession(options =>
 	options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddSingleton<IHashService, Sha1HashService>();
 
 // Add Data Context
 builder.Services.AddDbContext<DataContext>(options =>

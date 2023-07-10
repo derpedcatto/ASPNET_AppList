@@ -16,3 +16,19 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*----------- Star Rating ----------*/
+
+.bi-star,
+.bi-star-fill {
+  color: gold;
+  font-size: 1.2rem;
+}
+
+#star-container {
+  font-size: 3px;
+}
+
+#star-container .bi {
+  font-size: 1.5rem;
+}
